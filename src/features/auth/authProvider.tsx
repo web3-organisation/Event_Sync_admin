@@ -1,52 +1,104 @@
-import { AuthProvider } from "react-admin";
+// src/features/auth/authProvider.ts
+// authProvider React Admin — s'appuie sur POST /api/auth/login côté Next.js
 
-export const authProvider: AuthProvider = {
-  login: async ({
-    username,
-    password,
-  }: {
-    username: string;
-    password: string;
-  }) => {
-    const res = await fetch(import.meta.env.VITE_API_URL + "/api/auth/login", {
+const BASE_URL = import.meta.env.VITE_API_URL;
+
+if (!BASE_URL) {
+  throw new Error(
+    "VITE_API_URL est manquant dans les variables d'environnement.",
+  );
+}
+
+const TOKEN_KEY = "token";
+
+// ─── Types ────────────────────────────────────────────────────────────────────
+interface JwtPayload {
+  id?: string;
+  sub?: string;
+  name?: string;
+  username?: string;
+}
+
+interface LoginCredentials {
+  username: string;
+  password: string;
+}
+
+interface HttpError {
+  status?: number;
+  message?: string;
+}
+
+// ─── authProvider ─────────────────────────────────────────────────────────────
+export const authProvider = {
+  // ── Login ──────────────────────────────────────────────────────────────────
+  async login({ username, password }: LoginCredentials) {
+    const res = await fetch(`${BASE_URL}/api/auth/login`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ email: username, password }),
+      body: JSON.stringify({ username, password }),
     });
 
-    const data = await res.json();
-    if (!res.ok) throw new Error(data.error || "Invalid credentials.");
+    const data: unknown = await res.json().catch(() => ({}));
+    const body =
+      typeof data === "object" && data !== null
+        ? (data as Record<string, unknown>)
+        : {};
 
-    localStorage.setItem("admin_token", data.token);
-  },
-
-  checkAuth: () =>
-    localStorage.getItem("admin_token") ? Promise.resolve() : Promise.reject(),
-
-  logout: () => {
-    localStorage.removeItem("admin_token");
-    return Promise.resolve();
-  },
-
-  checkError: ({ status }: { status: number }) => {
-    if (status === 401 || status === 403) {
-      localStorage.removeItem("admin_token");
-      return Promise.reject();
+    if (!res.ok) {
+      throw new Error(
+        typeof body.error === "string" ? body.error : "Identifiants incorrects",
+      );
     }
-    return Promise.resolve();
+
+    // Le backend renvoie { token: "..." }
+    if (typeof body.token === "string") {
+      localStorage.setItem(TOKEN_KEY, body.token);
+    }
+
+    return body;
   },
 
-  getPermissions: () => Promise.resolve("admin"),
+  // ── Logout ─────────────────────────────────────────────────────────────────
+  async logout() {
+    localStorage.removeItem(TOKEN_KEY);
+  },
 
-  getIdentity: () => {
-    const token = localStorage.getItem("admin_token");
-    if (!token) return Promise.reject();
+  // ── Vérification de l'auth ─────────────────────────────────────────────────
+  async checkAuth() {
+    const token = localStorage.getItem(TOKEN_KEY);
+    if (!token) throw new Error("Non authentifié");
+  },
 
-    const payload = JSON.parse(atob(token.split(".")[1]));
-    return Promise.resolve({
-      id: payload.email as string,
-      fullName: "Administrator",
-      avatar: undefined,
-    });
+  // ── Gestion des erreurs HTTP ───────────────────────────────────────────────
+  async checkError(error: HttpError) {
+    const status = error?.status;
+    if (status === 401 || status === 403) {
+      localStorage.removeItem(TOKEN_KEY);
+      throw new Error("Session expirée");
+    }
+  },
+
+  // ── Infos de l'utilisateur connecté ───────────────────────────────────────
+  async getIdentity() {
+    const token = localStorage.getItem(TOKEN_KEY);
+    if (!token) throw new Error("Non authentifié");
+
+    // Décode le payload JWT sans lib externe (lecture seule, pas de vérif signature)
+    try {
+      const payload = JSON.parse(atob(token.split(".")[1])) as JwtPayload;
+      return {
+        id: payload.id ?? payload.sub ?? "admin",
+        fullName: payload.name ?? payload.username ?? "Administrateur",
+        avatar: undefined,
+      };
+    } catch {
+      return { id: "admin", fullName: "Administrateur", avatar: undefined };
+    }
+  },
+
+  // ── Permissions ────────────────────────────────────────────────────────────
+  async getPermissions() {
+    return null;
   },
 };
