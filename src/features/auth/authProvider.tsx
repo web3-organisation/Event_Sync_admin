@@ -36,7 +36,7 @@ export const authProvider = {
     const res = await fetch(`${BASE_URL}/api/auth/login`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ username, password }),
+      body: JSON.stringify({ email: username, password }),
     });
 
     const data: unknown = await res.json().catch(() => ({}));
