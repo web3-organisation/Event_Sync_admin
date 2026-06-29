@@ -21,18 +21,24 @@ if (!BASE_URL) {
   );
 }
 
-// ─── Fetch de base avec JWT ───────────────────────────────────────────────────
+// ─── Headers communs ──────────────────────────────────────────────────────────
+function getAuthHeaders(): HeadersInit {
+  const token = localStorage.getItem("token");
+  return {
+    "Content-Type": "application/json",
+    ...(token ? { Authorization: `Bearer ${token}` } : {}),
+  };
+}
+
+// ─── Fetch de base avec JWT (opérations unitaires) ───────────────────────────
 async function httpClient(
   url: string,
   options: RequestInit = {},
 ): Promise<unknown> {
-  const token = localStorage.getItem("token");
-
   const res = await fetch(url, {
     ...options,
     headers: {
-      "Content-Type": "application/json",
-      ...(token ? { Authorization: `Bearer ${token}` } : {}),
+      ...getAuthHeaders(),
       ...(options.headers ?? {}),
     },
   });
@@ -51,6 +57,28 @@ async function httpClient(
   }
 
   return json;
+}
+
+// ─── Fetch liste avec headers (pagination + X-Total-Count) ───────────────────
+async function httpClientList(
+  url: string,
+): Promise<{ json: unknown; total: number | null }> {
+  const res = await fetch(url, { headers: getAuthHeaders() });
+
+  const json: unknown = await res.json().catch(() => ({}));
+
+  if (!res.ok) {
+    const message =
+      typeof json === "object" && json !== null && "error" in json
+        ? String((json as Record<string, unknown>).error)
+        : `Erreur HTTP ${res.status}`;
+    throw new Error(message);
+  }
+
+  const totalHeader = res.headers.get("X-Total-Count");
+  const total = totalHeader !== null ? parseInt(totalHeader, 10) : null;
+
+  return { json, total };
 }
 
 // ─── Resource → path ──────────────────────────────────────────────────────────
@@ -84,8 +112,6 @@ function toRaRecordArray(json: unknown): LooseRecord[] {
 }
 
 // ─── Sérialisation sessions (formulaire → body API) ───────────────────────────
-// Le formulaire React Admin envoie { eventId, roomId, speakerId, ... }
-// On nettoie et on transmet tel quel au backend.
 function serializeSession(
   data: Record<string, unknown>,
 ): Record<string, unknown> {
@@ -102,19 +128,35 @@ function serializeSession(
 
 // ─── Data Provider ────────────────────────────────────────────────────────────
 const provider = {
+  // ── getList : supporte pagination, tri et filtres ────────────────────────
   async getList(_resource: string, params: GetListParams) {
-    const { filter = {} } = params;
+    const { pagination, sort, filter = {} } = params;
 
     const qs = new URLSearchParams();
+
+    // Pagination → _start / _end (format attendu par le backend)
+    if (pagination) {
+      const { page, perPage } = pagination;
+      qs.set("_start", String((page - 1) * perPage));
+      qs.set("_end", String(page * perPage));
+    }
+
+    // Tri
+    if (sort?.field) {
+      qs.set("_sort", sort.field);
+      qs.set("_order", sort.order ?? "ASC");
+    }
+
+    // Filtres
     Object.entries(filter as Record<string, unknown>).forEach(([k, v]) => {
       if (v !== undefined && v !== null && v !== "") qs.set(k, String(v));
     });
 
-    const query = qs.toString() ? `?${qs.toString()}` : "";
-    const json = await httpClient(`${getPath(_resource)}${query}`);
+    const url = `${getPath(_resource)}?${qs.toString()}`;
+    const { json, total } = await httpClientList(url);
     const data = toRaRecordArray(json);
 
-    return { data, total: data.length };
+    return { data, total: total ?? data.length };
   },
 
   async getOne(_resource: string, params: GetOneParams) {
@@ -131,15 +173,31 @@ const provider = {
     return { data };
   },
 
+  // ── getManyReference : supporte pagination + tri aussi ───────────────────
   async getManyReference(_resource: string, params: GetManyReferenceParams) {
-    const { target, id, filter = {} } = params;
+    const { target, id, filter = {}, pagination, sort } = params;
+
     const qs = new URLSearchParams({
       ...(filter as Record<string, string>),
       [target]: String(id),
     });
-    const json = await httpClient(`${getPath(_resource)}?${qs.toString()}`);
+
+    if (pagination) {
+      const { page, perPage } = pagination;
+      qs.set("_start", String((page - 1) * perPage));
+      qs.set("_end", String(page * perPage));
+    }
+
+    if (sort?.field) {
+      qs.set("_sort", sort.field);
+      qs.set("_order", sort.order ?? "ASC");
+    }
+
+    const url = `${getPath(_resource)}?${qs.toString()}`;
+    const { json, total } = await httpClientList(url);
     const data = toRaRecordArray(json);
-    return { data, total: data.length };
+
+    return { data, total: total ?? data.length };
   },
 
   async create(_resource: string, params: CreateParams) {

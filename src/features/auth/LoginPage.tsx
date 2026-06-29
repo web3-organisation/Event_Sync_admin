@@ -1,6 +1,7 @@
 //src/features/auth/LoginPage.tsx
 import { useState } from "react";
 import { useLogin, useNotify } from "react-admin";
+import { useThemeMode } from "../../lib/ThemeContext";
 import "./login.css";
 
 function IconSpinner() {
@@ -25,6 +26,7 @@ export default function LoginPage() {
   const [password, setPassword] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
+  const { mode } = useThemeMode();
 
   const login = useLogin();
   const notify = useNotify();
@@ -50,7 +52,7 @@ export default function LoginPage() {
     <>
       <style>{`@keyframes spin { to { transform: rotate(360deg); } }`}</style>
 
-      <main className="login-page">
+      <main className="login-page" data-theme={mode}>
         <section className="login-card">
           <div className="login-left">
             <div className="login-brand">

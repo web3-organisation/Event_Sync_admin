@@ -1,17 +1,17 @@
 import { Admin, Resource } from "react-admin";
 import { dataProvider } from "./lib/dataProvider";
 import { authProvider } from "./features/auth/authProvider";
+import { darkTheme, lightTheme } from "./lib/theme";
+import { ThemeModeProvider, useThemeMode } from "./lib/ThemeContext";
+import { Layout } from "./Layout";
 import LoginPage from "./features/auth/LoginPage";
 
 import { EventList, EventCreate, EventEdit } from "./events";
-
 import { SpeakerCreateModal } from "./speakers/SpeakerCreateModal";
 import { SpeakerEditModal } from "./speakers/SpeakerEditModal";
 import { SpeakerList } from "./speakers/SpeakerList";
 import { SpeakerShow } from "./speakers/SpeakerShow";
-
 import { SessionList, SessionCreate, SessionEdit } from "./sessions";
-
 import { RoomList, RoomCreate, RoomEdit } from "./rooms";
 
 import EventIcon from "@mui/icons-material/Event";
@@ -19,12 +19,18 @@ import PeopleIcon from "@mui/icons-material/People";
 import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
 import MeetingRoomIcon from "@mui/icons-material/MeetingRoom";
 
-export default function App() {
+// ─── Admin branché sur le thème du contexte ───────────────────────────────────
+function ThemedAdmin() {
+  const { mode } = useThemeMode();
+  const theme = mode === "dark" ? darkTheme : lightTheme;
+
   return (
     <Admin
       dataProvider={dataProvider}
       authProvider={authProvider}
       loginPage={LoginPage}
+      layout={Layout}
+      theme={theme}
       requireAuth
     >
       <Resource
@@ -61,5 +67,14 @@ export default function App() {
         options={{ label: "Salles" }}
       />
     </Admin>
+  );
+}
+
+// ─── App racine ───────────────────────────────────────────────────────────────
+export default function App() {
+  return (
+    <ThemeModeProvider>
+      <ThemedAdmin />
+    </ThemeModeProvider>
   );
 }

@@ -1,8 +1,29 @@
 /* app/css/login.css */
 /* Variables manquantes mappées sur les tokens du design system */
 :root {
-  --bg: var(--navy, #0a0a0f);
-  --bg-surface: var(--navy-light, #12121a);
+  --bg: #F1F5F9;
+  --bg-surface: #FFFFFF;
+  --text-primary: #0F172A;
+  --text-secondary: #475569;
+  --text-muted: #64748B;
+  --border: rgba(0, 0, 0, 0.08);
+  --border-mid: rgba(0, 0, 0, 0.12);
+  --input-bg: #F8FAFC;
+  --card-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
+  --copy-bg: rgba(0, 0, 0, 0.03);
+}
+
+[data-theme="dark"] {
+  --bg: #080E1A;
+  --bg-surface: #0F172A;
+  --text-primary: #F1F5F9;
+  --text-secondary: #94A3B8;
+  --text-muted: #64748B;
+  --border: rgba(255, 255, 255, 0.06);
+  --border-mid: rgba(255, 255, 255, 0.12);
+  --input-bg: #1A1A26;
+  --card-shadow: 0 30px 80px rgba(0, 0, 0, 0.4);
+  --copy-bg: rgba(255, 255, 255, 0.03);
 }
 
 /* ── Page ───────────────────────────────────── */
@@ -25,8 +46,8 @@
   border-radius: var(--radius-xl, 32px);
   overflow: hidden;
   background: var(--bg-surface);
-  border: 1px solid var(--border, rgba(255, 255, 255, 0.06));
-  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.4);
+  border: 1px solid var(--border);
+  box-shadow: var(--card-shadow);
 }
 
 /* ── Gauche (branding) ──────────────────────── */
@@ -40,8 +61,8 @@
     ),
     linear-gradient(
       135deg,
-      var(--navy-light, #12121a),
-      var(--navy-mid, #1a1a26)
+      rgba(108, 99, 255, 0.05),
+      rgba(236, 72, 153, 0.05)
     );
   display: flex;
   flex-direction: column;
@@ -84,20 +105,20 @@
   font-size: 2rem;
   font-family: var(--font-display, "Bricolage Grotesque", sans-serif);
   font-weight: 800;
-  color: var(--text-primary, #fff);
+  color: var(--text-primary);
 }
 
 .login-brand p {
   margin: 4px 0 0;
-  color: var(--text-secondary, #94a3b8);
+  color: var(--text-secondary);
   font-size: 14px;
 }
 
 .login-copy {
   padding: 28px;
   border-radius: var(--radius-lg, 20px);
-  border: 1px solid var(--border-mid, rgba(255, 255, 255, 0.12));
-  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid var(--border-mid);
+  background: var(--copy-bg);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
 }
@@ -121,13 +142,13 @@
   font-size: 2rem;
   font-family: var(--font-display, "Bricolage Grotesque", sans-serif);
   font-weight: 800;
-  color: var(--text-primary, #fff);
+  color: var(--text-primary);
   line-height: 1.1;
 }
 
 .login-copy p {
   margin: 0;
-  color: var(--text-secondary, #94a3b8);
+  color: var(--text-secondary);
   line-height: 1.65;
   font-size: 15px;
 }
@@ -145,8 +166,8 @@
 .form-box {
   padding: 36px;
   border-radius: var(--radius-xl, 32px);
-  background: var(--bg, #0a0a0f);
-  border: 1px solid var(--border, rgba(255, 255, 255, 0.06));
+  background: var(--bg);
+  border: 1px solid var(--border);
 }
 
 .form-box h3 {
@@ -154,13 +175,13 @@
   font-size: 1.9rem;
   font-family: var(--font-display, "Bricolage Grotesque", sans-serif);
   font-weight: 800;
-  color: var(--text-primary, #fff);
+  color: var(--text-primary);
   letter-spacing: -0.02em;
 }
 
 .form-box > p {
   margin: 10px 0 0;
-  color: var(--text-secondary, #94a3b8);
+  color: var(--text-secondary);
   font-size: 14px;
 }
 
@@ -176,7 +197,7 @@
   display: flex;
   flex-direction: column;
   gap: 8px;
-  color: var(--text-primary, #fff);
+  color: var(--text-primary);
   font-size: 0.9rem;
   font-weight: 500;
 }
@@ -185,9 +206,9 @@
   height: 48px;
   padding: 0 16px;
   border-radius: var(--radius-md, 12px);
-  border: 1px solid var(--border-mid, rgba(255, 255, 255, 0.12));
-  background: var(--navy-mid, #1a1a26);
-  color: var(--text-primary, #fff);
+  border: 1px solid var(--border-mid);
+  background: var(--input-bg);
+  color: var(--text-primary);
   font-family: var(--font-body, "DM Sans", sans-serif);
   font-size: 14px;
   outline: none;
@@ -198,7 +219,7 @@
 }
 
 .login-form input::placeholder {
-  color: var(--text-muted, #64748b);
+  color: var(--text-muted);
 }
 
 .login-form input:focus {
