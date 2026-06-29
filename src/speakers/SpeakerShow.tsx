@@ -12,7 +12,9 @@ const SpeakerBio = () => {
   const record = useRecordContext();
   if (!record?.bio) {
     return (
-      <Typography sx={{ color: "#94A3B8", fontStyle: "italic", fontSize: "0.88rem" }}>
+      <Typography
+        sx={{ color: "#94A3B8", fontStyle: "italic", fontSize: "0.88rem" }}
+      >
         Aucune biographie.
       </Typography>
     );

@@ -128,7 +128,12 @@ export const SpeakerCreateModal = () => {
           resource="speakers"
           redirect={false}
           mutationOptions={{ onSuccess: handleClose }}
-          sx={{ "& .RaCreate-main": { background: "transparent", boxShadow: "none" } }}
+          sx={{
+            "& .RaCreate-main": {
+              background: "transparent",
+              boxShadow: "none",
+            },
+          }}
         >
           <SimpleForm
             toolbar={<CreateToolbar />}

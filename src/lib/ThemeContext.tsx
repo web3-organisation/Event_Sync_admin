@@ -30,9 +30,11 @@ export function ThemeModeProvider({ children }: { children: ReactNode }) {
     localStorage.setItem("es-admin-theme", mode);
     // Update meta theme-color
     const meta = document.querySelector("meta[name='theme-color']");
-    if (meta) meta.setAttribute("content", mode === "dark" ? "#080E1A" : "#F1F5F9");
+    if (meta)
+      meta.setAttribute("content", mode === "dark" ? "#080E1A" : "#F1F5F9");
     // Update body background immediately to avoid flash
-    document.body.style.backgroundColor = mode === "dark" ? "#080E1A" : "#F1F5F9";
+    document.body.style.backgroundColor =
+      mode === "dark" ? "#080E1A" : "#F1F5F9";
   }, [mode]);
 
   const toggle = () => setMode((prev) => (prev === "dark" ? "light" : "dark"));

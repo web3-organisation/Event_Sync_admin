@@ -16,7 +16,16 @@ import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
 import AddIcon from "@mui/icons-material/Add";
 
 const FormToolbar = () => (
-  <Toolbar sx={{ background: "transparent", borderTop: "1px solid #1E293B", px: 0, pt: 2, minHeight: "auto !important", justifyContent: "flex-end" }}>
+  <Toolbar
+    sx={{
+      background: "transparent",
+      borderTop: "1px solid #1E293B",
+      px: 0,
+      pt: 2,
+      minHeight: "auto !important",
+      justifyContent: "flex-end",
+    }}
+  >
     <SaveButton
       label="Créer la session"
       icon={<AddIcon />}
@@ -40,13 +49,27 @@ const FormToolbar = () => (
 );
 
 const SectionLabel = ({ children }: { children: string }) => (
-  <Typography sx={{ fontSize: "0.72rem", fontWeight: 700, color: "#6C63FF", textTransform: "uppercase", letterSpacing: "0.1em", mt: 2, mb: 1, width: "100%" }}>
+  <Typography
+    sx={{
+      fontSize: "0.72rem",
+      fontWeight: 700,
+      color: "#6C63FF",
+      textTransform: "uppercase",
+      letterSpacing: "0.1em",
+      mt: 2,
+      mb: 1,
+      width: "100%",
+    }}
+  >
     {children}
   </Typography>
 );
 
 function RoomSelect() {
-  const { data: rooms = [], isLoading } = useGetList("rooms", { pagination: { page: 1, perPage: 100 }, sort: { field: "name", order: "ASC" } });
+  const { data: rooms = [], isLoading } = useGetList("rooms", {
+    pagination: { page: 1, perPage: 100 },
+    sort: { field: "name", order: "ASC" },
+  });
   return (
     <SelectInput
       source="roomId"
@@ -60,7 +83,10 @@ function RoomSelect() {
 }
 
 function SpeakerSelect() {
-  const { data: speakers = [], isLoading } = useGetList("speakers", { pagination: { page: 1, perPage: 200 }, sort: { field: "fullName", order: "ASC" } });
+  const { data: speakers = [], isLoading } = useGetList("speakers", {
+    pagination: { page: 1, perPage: 200 },
+    sort: { field: "fullName", order: "ASC" },
+  });
   return (
     <SelectInput
       source="speakerId"
@@ -86,13 +112,39 @@ export function SessionCreate() {
     <Box sx={{ maxWidth: 760, mx: "auto" }}>
       {/* Header */}
       <Box sx={{ mb: 3, display: "flex", alignItems: "center", gap: 1.5 }}>
-        <Box sx={{ width: 40, height: 40, borderRadius: "12px", background: "linear-gradient(135deg, rgba(108,99,255,0.25), rgba(236,72,153,0.1))", border: "1px solid rgba(108,99,255,0.25)", display: "flex", alignItems: "center", justifyContent: "center" }}>
+        <Box
+          sx={{
+            width: 40,
+            height: 40,
+            borderRadius: "12px",
+            background:
+              "linear-gradient(135deg, rgba(108,99,255,0.25), rgba(236,72,153,0.1))",
+            border: "1px solid rgba(108,99,255,0.25)",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        >
           <CalendarMonthIcon sx={{ fontSize: 20, color: "#A78BFA" }} />
         </Box>
         <Box>
-          <Typography sx={{ fontSize: "1.5rem", fontWeight: 800, fontFamily: "'Bricolage Grotesque', sans-serif", color: "#F1F5F9" }}>
+          <Typography
+            sx={{
+              fontSize: "1.5rem",
+              fontWeight: 800,
+              fontFamily: "'Bricolage Grotesque', sans-serif",
+              color: "#F1F5F9",
+            }}
+          >
             Nouvelle{" "}
-            <Box component="span" sx={{ background: "linear-gradient(135deg, #6C63FF, #EC4899)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>
+            <Box
+              component="span"
+              sx={{
+                background: "linear-gradient(135deg, #6C63FF, #EC4899)",
+                WebkitBackgroundClip: "text",
+                WebkitTextFillColor: "transparent",
+              }}
+            >
               Session
             </Box>
           </Typography>
@@ -105,21 +157,58 @@ export function SessionCreate() {
       <Create
         title=" "
         mutationOptions={{
-          onSuccess: () => { notify("Session créée avec succès", { type: "success" }); redirect("list", "sessions"); },
-          onError: (error: any) => notify(error?.message ?? "Erreur", { type: "error" }),
+          onSuccess: () => {
+            notify("Session créée avec succès", { type: "success" });
+            redirect("list", "sessions");
+          },
+          onError: (error: any) =>
+            notify(error?.message ?? "Erreur", { type: "error" }),
         }}
-        sx={{ "& .RaCreate-main": { background: "transparent", boxShadow: "none" } }}
+        sx={{
+          "& .RaCreate-main": { background: "transparent", boxShadow: "none" },
+        }}
       >
-        <SimpleForm toolbar={<FormToolbar />} sx={{ background: "transparent", p: "0 !important" }}>
+        <SimpleForm
+          toolbar={<FormToolbar />}
+          sx={{ background: "transparent", p: "0 !important" }}
+        >
           <SectionLabel>Informations</SectionLabel>
 
-          <TextInput source="title" label="Titre de la session" validate={required("Le titre est requis")} fullWidth />
-          <TextInput source="description" label="Description (optionnel)" multiline rows={3} fullWidth />
+          <TextInput
+            source="title"
+            label="Titre de la session"
+            validate={required("Le titre est requis")}
+            fullWidth
+          />
+          <TextInput
+            source="description"
+            label="Description (optionnel)"
+            multiline
+            rows={3}
+            fullWidth
+          />
 
           <SectionLabel>Horaires</SectionLabel>
-          <Box sx={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 2, width: "100%" }}>
-            <DateTimeInput source="startTime" label="Début" validate={required("L'heure de début est requise")} fullWidth />
-            <DateTimeInput source="endTime" label="Fin" validate={required("L'heure de fin est requise")} fullWidth />
+          <Box
+            sx={{
+              display: "grid",
+              gridTemplateColumns: "1fr 1fr",
+              gap: 2,
+              width: "100%",
+            }}
+          >
+            <DateTimeInput
+              source="startTime"
+              label="Début"
+              validate={required("L'heure de début est requise")}
+              fullWidth
+            />
+            <DateTimeInput
+              source="endTime"
+              label="Fin"
+              validate={required("L'heure de fin est requise")}
+              fullWidth
+            />
           </Box>
 
           <SectionLabel>Rattachement</SectionLabel>

@@ -27,7 +27,8 @@ const RoomCell = () => {
           width: 36,
           height: 36,
           borderRadius: "10px",
-          background: "linear-gradient(135deg, rgba(108,99,255,0.2), rgba(236,72,153,0.1))",
+          background:
+            "linear-gradient(135deg, rgba(108,99,255,0.2), rgba(236,72,153,0.1))",
           border: "1px solid rgba(108,99,255,0.2)",
           display: "flex",
           alignItems: "center",
@@ -35,13 +36,26 @@ const RoomCell = () => {
           flexShrink: 0,
         }}
       >
-        <MeetingRoomIcon sx={{ fontSize: 17, color: mode === "dark" ? "#A78BFA" : "#6C63FF" }} />
+        <MeetingRoomIcon
+          sx={{ fontSize: 17, color: mode === "dark" ? "#A78BFA" : "#6C63FF" }}
+        />
       </Box>
       <Box>
-        <Typography sx={{ fontWeight: 700, color: mode === "dark" ? "#F1F5F9" : "#0F172A", fontSize: "0.9rem" }}>
+        <Typography
+          sx={{
+            fontWeight: 700,
+            color: mode === "dark" ? "#F1F5F9" : "#0F172A",
+            fontSize: "0.9rem",
+          }}
+        >
           {record.name}
         </Typography>
-        <Typography sx={{ color: mode === "dark" ? "#4B5563" : "#64748B", fontSize: "0.72rem" }}>
+        <Typography
+          sx={{
+            color: mode === "dark" ? "#4B5563" : "#64748B",
+            fontSize: "0.72rem",
+          }}
+        >
           #{(record.id as string).slice(-6)}
         </Typography>
       </Box>
@@ -77,7 +91,11 @@ const RoomActions = () => {
   const { mode } = useThemeMode();
   return (
     <TopToolbar sx={{ alignItems: "center", gap: 1 }}>
-      <ExportButton sx={{ color: mode === "dark" ? "#475569 !important" : "#64748B !important" }} />
+      <ExportButton
+        sx={{
+          color: mode === "dark" ? "#475569 !important" : "#64748B !important",
+        }}
+      />
       <CreateButton
         label="Nouvelle salle"
         sx={{
@@ -89,10 +107,16 @@ const RoomActions = () => {
           px: 2.5,
           py: 1,
           border: "none !important",
-          boxShadow: mode === "dark" ? "0 4px 14px rgba(108,99,255,0.3)" : "0 4px 14px rgba(108,99,255,0.2)",
+          boxShadow:
+            mode === "dark"
+              ? "0 4px 14px rgba(108,99,255,0.3)"
+              : "0 4px 14px rgba(108,99,255,0.2)",
           "&:hover": {
             background: "linear-gradient(135deg, #5A4BFF, #d43d8a) !important",
-            boxShadow: mode === "dark" ? "0 6px 20px rgba(108,99,255,0.45) !important" : "0 6px 20px rgba(108,99,255,0.3) !important",
+            boxShadow:
+              mode === "dark"
+                ? "0 6px 20px rgba(108,99,255,0.45) !important"
+                : "0 6px 20px rgba(108,99,255,0.3) !important",
             transform: "translateY(-1px)",
           },
         }}
@@ -113,13 +137,21 @@ const RoomFilters = () => {
         "& .MuiOutlinedInput-root": {
           background: mode === "dark" ? "#0A1120" : "#F8FAFC",
           borderRadius: "10px",
-          "& fieldset": { borderColor: mode === "dark" ? "#1E293B" : "#E2E8F0" },
+          "& fieldset": {
+            borderColor: mode === "dark" ? "#1E293B" : "#E2E8F0",
+          },
           "&:hover fieldset": { borderColor: "#6C63FF" },
           "&.Mui-focused fieldset": { borderColor: "#6C63FF" },
         },
-        "& .MuiInputBase-input": { color: mode === "dark" ? "#E2E8F0" : "#0F172A" },
-        "& .MuiInputBase-input::placeholder": { color: mode === "dark" ? "#4B5563" : "#64748B" },
-        "& .MuiSvgIcon-root": { color: mode === "dark" ? "#4B5563" : "#64748B" },
+        "& .MuiInputBase-input": {
+          color: mode === "dark" ? "#E2E8F0" : "#0F172A",
+        },
+        "& .MuiInputBase-input::placeholder": {
+          color: mode === "dark" ? "#4B5563" : "#64748B",
+        },
+        "& .MuiSvgIcon-root": {
+          color: mode === "dark" ? "#4B5563" : "#64748B",
+        },
       }}
     />,
   ];
@@ -165,7 +197,9 @@ export function RoomList() {
           "& .RaDatagrid-row": {
             cursor: "pointer",
             transition: "background 0.15s ease",
-            "&:hover td": { background: mode === "dark" ? "#0A1120" : "#F8FAFC" },
+            "&:hover td": {
+              background: mode === "dark" ? "#0A1120" : "#F8FAFC",
+            },
             "&:last-child td": { borderBottom: "none" },
           },
           "& .RaDatagrid-row td": {

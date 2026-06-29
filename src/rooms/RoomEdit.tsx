@@ -124,7 +124,9 @@ export function RoomEdit() {
           onError: (error: any) =>
             notify(error?.message ?? "Erreur", { type: "error" }),
         }}
-        sx={{ "& .RaEdit-main": { background: "transparent", boxShadow: "none" } }}
+        sx={{
+          "& .RaEdit-main": { background: "transparent", boxShadow: "none" },
+        }}
       >
         <SimpleForm
           toolbar={<FormToolbar />}

@@ -150,7 +150,9 @@ export const SpeakerEditModal = () => {
         title=" "
         mutationOptions={{ onSuccess: handleClose }}
         mutationMode="pessimistic"
-        sx={{ "& .RaEdit-main": { background: "transparent", boxShadow: "none" } }}
+        sx={{
+          "& .RaEdit-main": { background: "transparent", boxShadow: "none" },
+        }}
       >
         <SpeakerDialogHeader onClose={handleClose} />
         <DialogContent sx={{ px: 3, pt: 3, pb: 1 }}>

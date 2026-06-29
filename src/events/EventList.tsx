@@ -145,8 +145,18 @@ const EventTitleCell = () => {
               mt: "2px",
             }}
           >
-            <PlaceIcon sx={{ fontSize: 11, color: mode === "dark" ? "#4B5563" : "#64748B" }} />
-            <Typography sx={{ color: mode === "dark" ? "#4B5563" : "#64748B", fontSize: "0.75rem" }}>
+            <PlaceIcon
+              sx={{
+                fontSize: 11,
+                color: mode === "dark" ? "#4B5563" : "#64748B",
+              }}
+            />
+            <Typography
+              sx={{
+                color: mode === "dark" ? "#4B5563" : "#64748B",
+                fontSize: "0.75rem",
+              }}
+            >
               {record.location}
             </Typography>
           </Box>
@@ -172,16 +182,27 @@ const ListActions = () => {
           px: 2.5,
           py: 1,
           border: "none !important",
-          boxShadow: mode === "dark" ? "0 4px 16px rgba(108,99,255,0.3)" : "0 4px 16px rgba(108,99,255,0.2)",
+          boxShadow:
+            mode === "dark"
+              ? "0 4px 16px rgba(108,99,255,0.3)"
+              : "0 4px 16px rgba(108,99,255,0.2)",
           transition: "all .25s ease",
           "&:hover": {
             background: "linear-gradient(135deg, #5A4BFF, #d43d8a) !important",
-            boxShadow: mode === "dark" ? "0 6px 24px rgba(108,99,255,0.45) !important" : "0 6px 24px rgba(108,99,255,0.3) !important",
+            boxShadow:
+              mode === "dark"
+                ? "0 6px 24px rgba(108,99,255,0.45) !important"
+                : "0 6px 24px rgba(108,99,255,0.3) !important",
             transform: "translateY(-1px)",
           },
         }}
       />
-      <ExportButton sx={{ color: mode === "dark" ? "#4B5563 !important" : "#64748B !important", ml: 1 }} />
+      <ExportButton
+        sx={{
+          color: mode === "dark" ? "#4B5563 !important" : "#64748B !important",
+          ml: 1,
+        }}
+      />
     </TopToolbar>
   );
 };
@@ -198,12 +219,18 @@ const EventFilters = () => {
         "& .MuiOutlinedInput-root": {
           background: mode === "dark" ? "#0A1120" : "#F8FAFC",
           borderRadius: "10px",
-          "& fieldset": { borderColor: mode === "dark" ? "#1E293B" : "#E2E8F0" },
+          "& fieldset": {
+            borderColor: mode === "dark" ? "#1E293B" : "#E2E8F0",
+          },
           "&:hover fieldset": { borderColor: "#6C63FF" },
           "&.Mui-focused fieldset": { borderColor: "#6C63FF" },
         },
-        "& .MuiInputBase-input::placeholder": { color: mode === "dark" ? "#4B5563" : "#64748B" },
-        "& .MuiSvgIcon-root": { color: mode === "dark" ? "#4B5563" : "#64748B" },
+        "& .MuiInputBase-input::placeholder": {
+          color: mode === "dark" ? "#4B5563" : "#64748B",
+        },
+        "& .MuiSvgIcon-root": {
+          color: mode === "dark" ? "#4B5563" : "#64748B",
+        },
       }}
     />,
   ];
@@ -249,7 +276,9 @@ export const EventList = () => {
           },
           "& .RaDatagrid-row": {
             cursor: "pointer",
-            "&:hover td": { background: mode === "dark" ? "#0A1120" : "#F8FAFC" },
+            "&:hover td": {
+              background: mode === "dark" ? "#0A1120" : "#F8FAFC",
+            },
             "&:last-child td": { borderBottom: "none" },
           },
           "& .RaDatagrid-row td": {
@@ -267,14 +296,24 @@ export const EventList = () => {
           label="Début"
           options={{ day: "2-digit", month: "short", year: "numeric" }}
           locales="fr-FR"
-          sx={{ "& span": { color: mode === "dark" ? "#CBD5E1" : "#475569", fontSize: "0.85rem" } }}
+          sx={{
+            "& span": {
+              color: mode === "dark" ? "#CBD5E1" : "#475569",
+              fontSize: "0.85rem",
+            },
+          }}
         />
         <DateField
           source="endDate"
           label="Fin"
           options={{ day: "2-digit", month: "short", year: "numeric" }}
           locales="fr-FR"
-          sx={{ "& span": { color: mode === "dark" ? "#CBD5E1" : "#475569", fontSize: "0.85rem" } }}
+          sx={{
+            "& span": {
+              color: mode === "dark" ? "#CBD5E1" : "#475569",
+              fontSize: "0.85rem",
+            },
+          }}
         />
         <FunctionField
           label=""
@@ -329,7 +368,9 @@ const EmptyEvents = () => {
         mt: 1,
       }}
     >
-      <CalendarMonthIcon sx={{ fontSize: 52, color: mode === "dark" ? "#1E293B" : "#CBD5E1" }} />
+      <CalendarMonthIcon
+        sx={{ fontSize: 52, color: mode === "dark" ? "#1E293B" : "#CBD5E1" }}
+      />
       <Typography
         sx={{
           color: mode === "dark" ? "#4B5563" : "#64748B",
@@ -340,7 +381,12 @@ const EmptyEvents = () => {
       >
         Aucun événement pour le moment
       </Typography>
-      <Typography sx={{ color: mode === "dark" ? "#374151" : "#94A3B8", fontSize: "0.85rem" }}>
+      <Typography
+        sx={{
+          color: mode === "dark" ? "#374151" : "#94A3B8",
+          fontSize: "0.85rem",
+        }}
+      >
         Créez votre premier événement pour commencer
       </Typography>
       <CreateButton

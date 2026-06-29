@@ -27,10 +27,16 @@ function SpeakerActions() {
           px: 2.5,
           py: 1,
           border: "none !important",
-          boxShadow: mode === "dark" ? "0 4px 14px rgba(108,99,255,0.3)" : "0 4px 14px rgba(108,99,255,0.2)",
+          boxShadow:
+            mode === "dark"
+              ? "0 4px 14px rgba(108,99,255,0.3)"
+              : "0 4px 14px rgba(108,99,255,0.2)",
           "&:hover": {
             background: "linear-gradient(135deg, #5A4BFF, #d43d8a) !important",
-            boxShadow: mode === "dark" ? "0 6px 20px rgba(108,99,255,0.45) !important" : "0 6px 20px rgba(108,99,255,0.3) !important",
+            boxShadow:
+              mode === "dark"
+                ? "0 6px 20px rgba(108,99,255,0.45) !important"
+                : "0 6px 20px rgba(108,99,255,0.3) !important",
             transform: "translateY(-1px)",
           },
         }}
@@ -52,13 +58,21 @@ const SpeakerFilters = () => {
         "& .MuiOutlinedInput-root": {
           background: mode === "dark" ? "#0A1120" : "#F8FAFC",
           borderRadius: "10px",
-          "& fieldset": { borderColor: mode === "dark" ? "#1E293B" : "#E2E8F0" },
+          "& fieldset": {
+            borderColor: mode === "dark" ? "#1E293B" : "#E2E8F0",
+          },
           "&:hover fieldset": { borderColor: "#6C63FF" },
           "&.Mui-focused fieldset": { borderColor: "#6C63FF" },
         },
-        "& .MuiInputBase-input": { color: mode === "dark" ? "#E2E8F0" : "#0F172A" },
-        "& .MuiInputBase-input::placeholder": { color: mode === "dark" ? "#4B5563" : "#64748B" },
-        "& .MuiSvgIcon-root": { color: mode === "dark" ? "#4B5563" : "#64748B" },
+        "& .MuiInputBase-input": {
+          color: mode === "dark" ? "#E2E8F0" : "#0F172A",
+        },
+        "& .MuiInputBase-input::placeholder": {
+          color: mode === "dark" ? "#4B5563" : "#64748B",
+        },
+        "& .MuiSvgIcon-root": {
+          color: mode === "dark" ? "#4B5563" : "#64748B",
+        },
       }}
     />,
   ];
@@ -103,7 +117,9 @@ export const SpeakerList = () => {
           },
           "& .RaDatagrid-row": {
             cursor: "pointer",
-            "&:hover td": { background: mode === "dark" ? "#0A1120" : "#F8FAFC" },
+            "&:hover td": {
+              background: mode === "dark" ? "#0A1120" : "#F8FAFC",
+            },
             "&:last-child td": { borderBottom: "none" },
           },
           "& .RaDatagrid-row td": {
@@ -134,7 +150,11 @@ export const SpeakerList = () => {
               </Avatar>
               <Box>
                 <Typography
-                  sx={{ fontWeight: 700, fontSize: "0.88rem", color: mode === "dark" ? "#F1F5F9" : "#0F172A" }}
+                  sx={{
+                    fontWeight: 700,
+                    fontSize: "0.88rem",
+                    color: mode === "dark" ? "#F1F5F9" : "#0F172A",
+                  }}
                 >
                   {record.fullName as string}
                 </Typography>
@@ -161,7 +181,10 @@ export const SpeakerList = () => {
                 {record.bio as string}
               </Typography>
             ) : (
-              <Typography variant="caption" sx={{ color: mode === "dark" ? "#4B5563" : "#94A3B8" }}>
+              <Typography
+                variant="caption"
+                sx={{ color: mode === "dark" ? "#4B5563" : "#94A3B8" }}
+              >
                 —
               </Typography>
             )
@@ -179,7 +202,10 @@ export const SpeakerList = () => {
             }>;
             if (!links?.length) {
               return (
-                <Typography variant="caption" sx={{ color: mode === "dark" ? "#4B5563" : "#94A3B8" }}>
+                <Typography
+                  variant="caption"
+                  sx={{ color: mode === "dark" ? "#4B5563" : "#94A3B8" }}
+                >
                   Aucun
                 </Typography>
               );
@@ -196,14 +222,23 @@ export const SpeakerList = () => {
                     target="_blank"
                     clickable
                     sx={{
-                      background: mode === "dark" ? "rgba(108,99,255,0.15)" : "rgba(108,99,255,0.08)",
+                      background:
+                        mode === "dark"
+                          ? "rgba(108,99,255,0.15)"
+                          : "rgba(108,99,255,0.08)",
                       color: mode === "dark" ? "#A78BFA" : "#6C63FF",
                       fontWeight: 500,
                       fontSize: "0.7rem",
                       height: 20,
-                      border: mode === "dark" ? "1px solid rgba(108,99,255,0.25)" : "none",
+                      border:
+                        mode === "dark"
+                          ? "1px solid rgba(108,99,255,0.25)"
+                          : "none",
                       "&:hover": {
-                        background: mode === "dark" ? "rgba(108,99,255,0.25)" : "rgba(108,99,255,0.18)",
+                        background:
+                          mode === "dark"
+                            ? "rgba(108,99,255,0.25)"
+                            : "rgba(108,99,255,0.18)",
                       },
                     }}
                   />

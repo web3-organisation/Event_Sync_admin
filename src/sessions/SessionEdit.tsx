@@ -105,7 +105,18 @@ function SpeakerSelect() {
 }
 
 // ─── Form body (uses record context) ─────────────────────────────────────────
-function SessionFormContent({ events, eventsLoading }: { events: any[]; eventsLoading: boolean }) {
+interface EventRecord {
+  id: string | number;
+  title: string;
+}
+
+function SessionFormContent({
+  events,
+  eventsLoading,
+}: {
+  events: EventRecord[];
+  eventsLoading: boolean;
+}) {
   const record = useRecordContext();
   return (
     <>
@@ -116,7 +127,8 @@ function SessionFormContent({ events, eventsLoading }: { events: any[]; eventsLo
             width: 40,
             height: 40,
             borderRadius: "12px",
-            background: "linear-gradient(135deg, rgba(108,99,255,0.25), rgba(236,72,153,0.1))",
+            background:
+              "linear-gradient(135deg, rgba(108,99,255,0.25), rgba(236,72,153,0.1))",
             border: "1px solid rgba(108,99,255,0.25)",
             display: "flex",
             alignItems: "center",
@@ -169,7 +181,12 @@ function SessionFormContent({ events, eventsLoading }: { events: any[]; eventsLo
 
       <SectionLabel>Horaires</SectionLabel>
       <Box
-        sx={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 2, width: "100%" }}
+        sx={{
+          display: "grid",
+          gridTemplateColumns: "1fr 1fr",
+          gap: 2,
+          width: "100%",
+        }}
       >
         <DateTimeInput
           source="startTime"
@@ -224,7 +241,9 @@ export function SessionEdit() {
           onError: (error: any) =>
             notify(error?.message ?? "Erreur", { type: "error" }),
         }}
-        sx={{ "& .RaEdit-main": { background: "transparent", boxShadow: "none" } }}
+        sx={{
+          "& .RaEdit-main": { background: "transparent", boxShadow: "none" },
+        }}
       >
         <SimpleForm
           toolbar={<FormToolbar />}

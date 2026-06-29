@@ -1,27 +1,27 @@
 /* app/css/login.css */
 /* Variables manquantes mappées sur les tokens du design system */
 :root {
-  --bg: #F1F5F9;
-  --bg-surface: #FFFFFF;
-  --text-primary: #0F172A;
+  --bg: #f1f5f9;
+  --bg-surface: #ffffff;
+  --text-primary: #0f172a;
   --text-secondary: #475569;
-  --text-muted: #64748B;
+  --text-muted: #64748b;
   --border: rgba(0, 0, 0, 0.08);
   --border-mid: rgba(0, 0, 0, 0.12);
-  --input-bg: #F8FAFC;
+  --input-bg: #f8fafc;
   --card-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
   --copy-bg: rgba(0, 0, 0, 0.03);
 }
 
 [data-theme="dark"] {
-  --bg: #080E1A;
-  --bg-surface: #0F172A;
-  --text-primary: #F1F5F9;
-  --text-secondary: #94A3B8;
-  --text-muted: #64748B;
+  --bg: #080e1a;
+  --bg-surface: #0f172a;
+  --text-primary: #f1f5f9;
+  --text-secondary: #94a3b8;
+  --text-muted: #64748b;
   --border: rgba(255, 255, 255, 0.06);
   --border-mid: rgba(255, 255, 255, 0.12);
-  --input-bg: #1A1A26;
+  --input-bg: #1a1a26;
   --card-shadow: 0 30px 80px rgba(0, 0, 0, 0.4);
   --copy-bg: rgba(255, 255, 255, 0.03);
 }
@@ -59,11 +59,7 @@
       var(--violet-glow, rgba(124, 58, 237, 0.4)),
       transparent 40%
     ),
-    linear-gradient(
-      135deg,
-      rgba(108, 99, 255, 0.05),
-      rgba(236, 72, 153, 0.05)
-    );
+    linear-gradient(135deg, rgba(108, 99, 255, 0.05), rgba(236, 72, 153, 0.05));
   display: flex;
   flex-direction: column;
   justify-content: space-between;
