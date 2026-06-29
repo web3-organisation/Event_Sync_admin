@@ -104,7 +104,7 @@ export function RoomCreate() {
             notify("Salle créée avec succès", { type: "success" });
             redirect("list", "rooms");
           },
-          onError: (error: any) =>
+          onError: (error: Error) =>
             notify(error?.message ?? "Erreur", { type: "error" }),
         }}
         sx={{

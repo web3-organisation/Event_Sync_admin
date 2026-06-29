@@ -11,7 +11,7 @@ import {
   useNotify,
   useRedirect,
 } from "react-admin";
-import { Box, Typography, Grid } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
 import AddIcon from "@mui/icons-material/Add";
 
@@ -162,7 +162,7 @@ export function SessionCreate() {
             notify("Session créée avec succès", { type: "success" });
             redirect("list", "sessions");
           },
-          onError: (error: any) =>
+          onError: (error: Error) =>
             notify(error?.message ?? "Erreur", { type: "error" }),
         }}
         sx={{
