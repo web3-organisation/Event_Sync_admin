@@ -139,6 +139,10 @@ const CustomAppBar = () => {
           borderBottom: "1px solid",
           borderColor: mode === "dark" ? "#1E293B" : "#E2E8F0",
           minHeight: "56px !important",
+          color: mode === "dark" ? "#F8FAFC" : "#0F172A",
+        },
+        "& .MuiButtonBase-root, & .MuiTypography-root": {
+          color: mode === "dark" ? "#F8FAFC" : "#0F172A",
         },
       }}
     >
