@@ -8,7 +8,7 @@ import {
   CreateButton,
   FunctionField,
 } from "react-admin";
-import { Avatar, Box, Chip, Typography } from "@mui/material";
+import { Avatar, Box, Typography } from "@mui/material";
 import { useThemeMode } from "../lib/ThemeContext";
 
 // ─── Toolbar ──────────────────────────────────────────────────────────────────
@@ -45,7 +45,7 @@ function SpeakerActions() {
   );
 }
 
-// ─── SpeakerList ──────────────────────────────────────────────────────────────
+// ─── Filters ──────────────────────────────────────────────────────────────────
 const SpeakerFilters = () => {
   const { mode } = useThemeMode();
   return [
@@ -78,6 +78,7 @@ const SpeakerFilters = () => {
   ];
 };
 
+// ─── SpeakerList ──────────────────────────────────────────────────────────────
 export const SpeakerList = () => {
   const { mode } = useThemeMode();
   return (
@@ -148,17 +149,15 @@ export const SpeakerList = () => {
               >
                 {(record.fullName as string)?.[0]?.toUpperCase()}
               </Avatar>
-              <Box>
-                <Typography
-                  sx={{
-                    fontWeight: 700,
-                    fontSize: "0.88rem",
-                    color: mode === "dark" ? "#F1F5F9" : "#0F172A",
-                  }}
-                >
-                  {record.fullName as string}
-                </Typography>
-              </Box>
+              <Typography
+                sx={{
+                  fontWeight: 700,
+                  fontSize: "0.88rem",
+                  color: mode === "dark" ? "#F1F5F9" : "#0F172A",
+                }}
+              >
+                {record.fullName as string}
+              </Typography>
             </Box>
           )}
         />
@@ -191,7 +190,7 @@ export const SpeakerList = () => {
           }
         />
 
-        {/* Liens */}
+        {/* Liens — affiche l'URL brute */}
         <FunctionField
           label="Liens"
           render={(record: Record<string, unknown>) => {
@@ -200,50 +199,71 @@ export const SpeakerList = () => {
               label: string;
               url: string;
             }>;
-            if (!links?.length) {
+
+            // Si des speakerLinks existent, on les affiche
+            if (links?.length) {
+              return (
+                <Box
+                  sx={{ display: "flex", flexDirection: "column", gap: 0.5 }}
+                >
+                  {links.slice(0, 2).map((l) => (
+                    <Typography
+                      key={l.id}
+                      component="a"
+                      href={l.url}
+                      target="_blank"
+                      onClick={(e: React.MouseEvent) => e.stopPropagation()}
+                      sx={{
+                        fontSize: "0.75rem",
+                        color: mode === "dark" ? "#A78BFA" : "#6C63FF",
+                        textDecoration: "none",
+                        overflow: "hidden",
+                        textOverflow: "ellipsis",
+                        whiteSpace: "nowrap",
+                        maxWidth: 200,
+                        display: "block",
+                        "&:hover": { textDecoration: "underline" },
+                      }}
+                    >
+                      {l.url}
+                    </Typography>
+                  ))}
+                </Box>
+              );
+            }
+
+            const photoUrl = record.photoUrl as string;
+            if (photoUrl) {
               return (
                 <Typography
-                  variant="caption"
-                  sx={{ color: mode === "dark" ? "#4B5563" : "#94A3B8" }}
+                  component="a"
+                  href={photoUrl}
+                  target="_blank"
+                  onClick={(e: React.MouseEvent) => e.stopPropagation()}
+                  sx={{
+                    fontSize: "0.75rem",
+                    color: mode === "dark" ? "#A78BFA" : "#6C63FF",
+                    textDecoration: "none",
+                    overflow: "hidden",
+                    textOverflow: "ellipsis",
+                    whiteSpace: "nowrap",
+                    maxWidth: 200,
+                    display: "block",
+                    "&:hover": { textDecoration: "underline" },
+                  }}
                 >
-                  Aucun
+                  {photoUrl}
                 </Typography>
               );
             }
+
             return (
-              <Box sx={{ display: "flex", gap: 0.5, flexWrap: "wrap" }}>
-                {links.slice(0, 3).map((l) => (
-                  <Chip
-                    key={l.id}
-                    label={l.label}
-                    size="small"
-                    component="a"
-                    href={l.url}
-                    target="_blank"
-                    clickable
-                    sx={{
-                      background:
-                        mode === "dark"
-                          ? "rgba(108,99,255,0.15)"
-                          : "rgba(108,99,255,0.08)",
-                      color: mode === "dark" ? "#A78BFA" : "#6C63FF",
-                      fontWeight: 500,
-                      fontSize: "0.7rem",
-                      height: 20,
-                      border:
-                        mode === "dark"
-                          ? "1px solid rgba(108,99,255,0.25)"
-                          : "none",
-                      "&:hover": {
-                        background:
-                          mode === "dark"
-                            ? "rgba(108,99,255,0.25)"
-                            : "rgba(108,99,255,0.18)",
-                      },
-                    }}
-                  />
-                ))}
-              </Box>
+              <Typography
+                variant="caption"
+                sx={{ color: mode === "dark" ? "#4B5563" : "#94A3B8" }}
+              >
+                Aucun
+              </Typography>
             );
           }}
         />
