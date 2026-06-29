@@ -14,72 +14,55 @@ import EventIcon from "@mui/icons-material/Event";
 import PeopleIcon from "@mui/icons-material/People";
 import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
 import MeetingRoomIcon from "@mui/icons-material/MeetingRoom";
-import DashboardIcon from "@mui/icons-material/Dashboard";
 import LightModeIcon from "@mui/icons-material/LightMode";
 import DarkModeIcon from "@mui/icons-material/DarkMode";
 import { useThemeMode } from "./lib/ThemeContext";
 
-// ─── Sidebar Logo ─────────────────────────────────────────────────────────────
 const SidebarLogo = () => {
   const { mode } = useThemeMode();
   return (
     <Box
       sx={{
-        px: 2.5,
-        py: 2.5,
+        px: 1.5,
+        py: 1,
         display: "flex",
+        flexDirection: "column",
         alignItems: "center",
-        gap: 1.5,
         borderBottom: "1px solid",
         borderColor: mode === "dark" ? "#1E293B" : "#E2E8F0",
         mb: 1,
+        overflow: "hidden",
+        minWidth: 0,
       }}
     >
       <Box
+        component="img"
+        src="/logo.png"
+        alt="EventSync Logo"
         sx={{
-          width: 34,
-          height: 34,
-          borderRadius: "10px",
-          background: "linear-gradient(135deg, #6C63FF, #EC4899)",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          flexShrink: 0,
-          boxShadow:
-            mode === "dark"
-              ? "0 4px 12px rgba(108,99,255,0.35)"
-              : "0 4px 12px rgba(108,99,255,0.25)",
+          width: 200, // large pour que le logo visible soit grand
+          height: "auto",
+          objectFit: "contain",
+          maxWidth: "100%",
+          my: -5, // compense l'espace transparent en haut/bas du PNG
+          mx: -2, // compense l'espace transparent gauche/droite
+        }}
+      />
+      <Typography
+        sx={{
+          fontSize: "0.65rem",
+          color: mode === "dark" ? "#4B5563" : "#64748B",
+          letterSpacing: "0.06em",
+          mt: 0,
+          whiteSpace: "nowrap",
+          overflow: "hidden",
         }}
       >
-        <DashboardIcon sx={{ fontSize: 18, color: "#fff" }} />
-      </Box>
-      <Box>
-        <Typography
-          sx={{
-            fontFamily: "'Bricolage Grotesque', sans-serif",
-            fontWeight: 800,
-            fontSize: "0.95rem",
-            color: mode === "dark" ? "#F1F5F9" : "#0F172A",
-            lineHeight: 1.1,
-          }}
-        >
-          EventSync
-        </Typography>
-        <Typography
-          sx={{
-            fontSize: "0.68rem",
-            color: mode === "dark" ? "#4B5563" : "#64748B",
-            letterSpacing: "0.06em",
-          }}
-        >
-          Administration
-        </Typography>
-      </Box>
+        Administration
+      </Typography>
     </Box>
   );
 };
-
-// ─── Custom Menu ──────────────────────────────────────────────────────────────
 const CustomMenu = () => {
   const { mode } = useThemeMode();
   return (
@@ -144,13 +127,11 @@ const CustomAppBar = () => {
   const { mode } = useThemeMode();
   return (
     <AppBar
-      toolbar={
-        <>
-          <ThemeToggle />
-          <UserMenu>
-            <Logout />
-          </UserMenu>
-        </>
+      toolbar={<ThemeToggle />}
+      userMenu={
+        <UserMenu>
+          <Logout />
+        </UserMenu>
       }
       sx={{
         "& .MuiToolbar-root": {
