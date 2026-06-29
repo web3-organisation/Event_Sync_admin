@@ -20,7 +20,8 @@ const FormToolbar = () => (
     sx={{
       background: "transparent",
       borderTop: "1px solid #1E293B",
-      px: 0,
+      px: 4,
+      pb: 3,
       pt: 2,
       minHeight: "auto !important",
       justifyContent: "flex-end",
@@ -170,7 +171,10 @@ export function SessionCreate() {
       >
         <SimpleForm
           toolbar={<FormToolbar />}
-          sx={{ background: "transparent", p: "0 !important" }}
+          sx={{
+            background: "transparent",
+            "& .MuiCardContent-root": { p: { xs: 3, sm: 4 } },
+          }}
         >
           <SectionLabel>Informations</SectionLabel>
 

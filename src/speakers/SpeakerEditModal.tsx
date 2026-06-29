@@ -43,6 +43,7 @@ const EditToolbar = () => (
         fontWeight: 700,
         fontSize: "0.85rem",
         borderRadius: "10px",
+        mb: 2,
         px: 3,
         py: 1.1,
         border: "none !important",
@@ -57,7 +58,6 @@ const EditToolbar = () => (
   </Toolbar>
 );
 
-// ─── Header avec avatar ────────────────────────────────────────────────────────
 const SpeakerDialogHeader = ({ onClose }: { onClose: () => void }) => {
   const record = useRecordContext();
   const { mode } = useThemeMode();
@@ -167,7 +167,6 @@ const inputSx = (mode: "dark" | "light") => ({
   },
 });
 
-// ─── SpeakerEditModal ─────────────────────────────────────────────────────────
 export const SpeakerEditModal = () => {
   const redirect = useRedirect();
   const { mode } = useThemeMode();
